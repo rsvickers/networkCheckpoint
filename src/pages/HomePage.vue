@@ -19,6 +19,14 @@
 
     </div>
   </div>
+
+  <!-- <section class="row">
+    <div class="col-12 d-flex justify-content-between">
+      <button class="btn btn-success" @click="changePage(newer)"> 👈 Newer Page</button>
+      <button class="btn btn-success" @click="changePage(older)"> Older Page 👉 </button>
+    </div>
+  </section> -->
+  <PaginationComponent />
   <PostForm />
 </template>
 
@@ -29,6 +37,7 @@ import { AppState } from "../AppState.js"
 import { postsService } from "../services/PostsService.js"
 import PostCard from "../components/PostCard.vue";
 import PostForm from "../components/PostForm.vue";
+import PaginationComponent from "../components/PaginationComponent.vue";
 
 export default {
   setup() {
@@ -44,10 +53,21 @@ export default {
       }
     }
     return {
-      posts: computed(() => AppState.posts)
+      posts: computed(() => AppState.posts),
+      newer: computed(() => AppState.newer),
+      older: computed(() => AppState.older),
+
+      // async changePage(url) {
+      //   try {
+      //     await postsService.changePage(url)
+      //   } catch (error) {
+      //     Pop.error(error)
+      //   }
+      // }
+
     };
   },
-  components: { PostCard, PostForm }
+  components: { PostCard, PostForm, PaginationComponent }
 }
 </script>
 

@@ -2,8 +2,10 @@
     <div class="component">
         <section class="p-3 row rounded bg-light shadow  borderStyle">
             <div class="col-12 mb-3 d-flex ">
-                <img class="avatar rounded-circle" :src="post.creator.picture" :alt="post.creator.name">
-                <p><b>{{ post.creator.name }}</b></p>
+                <router-link :to="{ name: 'Profile', params: { profileId: post.creator.id } }">
+                    <img class="avatar rounded-circle" :src="post.creator.picture" :alt="post.creator.name">
+                    <p><b>{{ post.creator.name }}</b></p>
+                </router-link>
                 <p v-if="post.creator.graduated"><i class="mdi mdi-account-school"></i></p>
                 <p v-else></p>
                 <div>
@@ -14,6 +16,9 @@
                 <p>{{ post.body }}</p>
                 <img v-if="post.imgUrl" :src="post.imgUrl" alt="">
                 <p v-else></p>
+            </div>
+            <div class="text-end">
+                <i class="fs-1 text-danger mdi mdi-heart">{{ post.likes.length }}</i>
             </div>
         </section>
 
