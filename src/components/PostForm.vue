@@ -1,13 +1,21 @@
 <template>
-    <div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
+    <div v-if="account" class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newBlogModalLabel">New Post</h1>
+                    <h1 class="modal-title fs-5" id="newBlogModalLabel">New Post Please</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="">
+                    <form @submit.prevent="createPost()">
+                        <div>
+                            <textarea v-model="form.body" placeholder="Share whats happening..." required maxlength="1000"
+                                id="bio" />
+                        </div>
+                        <div>
+                            <input v-model="form.imgUrl" type="url" placeholder="Image URL..." id="imgUrl">
+                        </div>
 
                         <button class="btn btn-primary">Submit</button>
                     </form>
@@ -20,11 +28,27 @@
 
 <script>
 // import { AppState } from '../AppState';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import Pop from '../utils/Pop.js';
+import { postsService } from '../services/PostsService.js';
+import { Modal } from 'bootstrap';
+import { AppState } from '../AppState.js';
 export default {
     setup() {
         const form = ref({})
-        return {}
+        return {
+            form,
+            async createPost() {
+                try {
+                    const postData = form.value
+                    await postsService.createPost(postData)
+                    Modal.getOrCreateInstance('#newPostModal').hide()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            account: computed(() => AppState.account)
+        }
     }
 };
 </script>

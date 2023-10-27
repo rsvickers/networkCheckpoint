@@ -9,18 +9,24 @@ class PostsService {
         const res = await api.get('api/posts')
         logger.log('got data', res.data)
         AppState.posts = res.data.posts.map((postPOJO) => new Post(postPOJO))
+        AppState.newerPage = res.data.newer
+        AppState.olderPage = res.data.older
     }
 
 
-    async changePage(endpointUrl) {
-        const res = await api.get(endpointUrl)
-        logger.log('got page', res.data)
-        const newPosts = res.data.posts.map((pojo) => new Post(pojo))
-        AppState.posts = newPosts
-        AppState.newer = res.data.newer
-        AppState.older = res.data.older
+    async changePage(url) {
+        const res = await api.get(url);
+        AppState.newerPage = res.data.newer
+        AppState.olderPage = res.data.older
+        AppState.posts = res.data.posts.map((POJO) => new Post(POJO))
     }
 
+
+    async createPost(postData) {
+        const res = await api.post('api/posts', postData)
+        const newPost = new Post(res.data)
+        AppState.posts.push(newPost)
+    }
 }
 
 export const postsService = new PostsService()
