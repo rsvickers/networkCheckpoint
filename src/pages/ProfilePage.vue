@@ -35,6 +35,14 @@
                 <PostCard :post="post" />
             </div>
         </section>
+
+
+        <section class="row">
+            <div class="col-12 d-flex justify-content-between">
+                <button :disabled="!newer" class="btn btn-success" @click="changePage(newer)"> 👈 Newer Page</button>
+                <button :disabled="!older" class="btn btn-success" @click="changePage(older)"> Older Page 👉 </button>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -46,6 +54,7 @@ import { useRoute } from "vue-router";
 import { logger } from "../utils/Logger";
 import { profilesService } from "../services/ProfilesService"
 import PostCard from "../components/PostCard.vue";
+
 export default {
     setup() {
         onMounted(() => {
@@ -74,7 +83,17 @@ export default {
         }
         return {
             profile: computed(() => AppState.profile),
-            posts: computed(() => AppState.posts)
+            posts: computed(() => AppState.posts),
+            newer: computed(() => AppState.newerPage),
+            older: computed(() => AppState.olderPage),
+            account: computed(() => AppState.account),
+            async changePage(url) {
+                try {
+                    await profilesService.changePage(url)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
         };
     },
     components: { PostCard }

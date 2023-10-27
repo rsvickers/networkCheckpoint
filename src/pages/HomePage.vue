@@ -25,8 +25,8 @@
 
   <section class="row">
     <div class="col-12 d-flex justify-content-between">
-      <button class="btn btn-success" @click="changePage(newer)"> 👈 Newer Page</button>
-      <button class="btn btn-success" @click="changePage(older)"> Older Page 👉 </button>
+      <button :disabled="!newer" class="btn btn-success" @click="changePage(newer)"> 👈 Newer Page</button>
+      <button :disabled="!older" class="btn btn-success" @click="changePage(older)"> Older Page 👉 </button>
     </div>
   </section>
   <!-- <PaginationComponent /> -->
