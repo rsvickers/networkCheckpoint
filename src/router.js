@@ -22,6 +22,11 @@ const routes = [
     component: loadPage('ProfilePage')
   },
   {
+    path: '/search',
+    name: 'Search',
+    component: loadPage('SearchPage')
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

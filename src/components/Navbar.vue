@@ -17,6 +17,11 @@
             About
           </router-link>
         </li> -->
+        <li>
+          <router-link :to="{ name: 'Search' }" class="btn text-success lighten-30 selectable text-uppercase">
+            <i class="fs-1 text-light mdi mdi-magnify"></i>
+          </router-link>
+        </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <Login />

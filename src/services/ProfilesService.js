@@ -29,6 +29,14 @@ class ProfilesService {
         AppState.posts = res.data.posts.map(pojo => new Post(pojo))
     }
 
+    async getProfilesWithSearchQuery(searchQuery) {
+        const res = await api.get(`api/profiles?query=${searchQuery}`)
+        logger.log('get profiles with search', res.data)
+        AppState.searchQuery = searchQuery
+        const newProfile = res.data.map((profilePOJO) => new Profile(profilePOJO))
+        AppState.profile = newProfile
+    }
+
 }
 
 export const profilesService = new ProfilesService()
