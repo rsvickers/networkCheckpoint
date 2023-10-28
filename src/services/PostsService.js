@@ -27,6 +27,12 @@ class PostsService {
         const newPost = new Post(res.data)
         AppState.posts.push(newPost)
     }
+
+    async removePost(postId) {
+        const res = await api.delete(`api/posts/${postId}`)
+        logger.log('delete project', res.data)
+        AppState.posts = AppState.posts.filter((post) => post.id != postId)
+    }
 }
 
 export const postsService = new PostsService()

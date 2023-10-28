@@ -17,8 +17,10 @@
                 <img v-if="post.imgUrl" :src="post.imgUrl" alt="">
                 <p v-else></p>
             </div>
-            <div class="text-end">
+            <div class="d-flex justify-content-between">
                 <i class="fs-1 text-danger mdi mdi-heart">{{ post.likes.length }}</i>
+                <i v-if="account.id == post.creator.id" @click="removePost()" role="button" title="remove post"
+                    class="fs-1 text-danger mdi mdi-delete-circle"></i>
             </div>
         </section>
 
@@ -27,15 +29,32 @@
 
 
 <script>
-// import { AppState } from '../AppState';
-// import { computed, reactive, onMounted } from 'vue';
+import { AppState } from '../AppState';
+import { computed } from 'vue';
 import { Post } from '../models/Post.js';
+import Pop from '../utils/Pop.js';
+import { postsService } from '../services/PostsService.js';
 export default {
     props: {
         post: { type: Post, required: true },
     },
-    setup() {
-        return {}
+    setup(props) {
+        return {
+            account: computed(() => AppState.account),
+
+            async removePost() {
+                try {
+                    const yes = await Pop.confirm('Are you sure about that?')
+                    if (!yes) {
+                        return
+                    }
+                    const postId = props.post.id
+                    await postsService.removePost(postId)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
+        }
     }
 };
 </script>
