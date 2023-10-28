@@ -18,7 +18,8 @@
                 <p v-else></p>
             </div>
             <div class="d-flex justify-content-between">
-                <i class="fs-1 text-danger mdi mdi-heart">{{ post.likes.length }}</i>
+                <i @click="likePost()" class="fs-1 text-danger mdi mdi-heart">{{ post.likes.length }}</i>
+                <!-- <p @click="editPost()" role="button" class=""><i class="mdi mdi-pencil-circle"></i>Edit</p> -->
                 <i v-if="account.id == post.creator.id" @click="removePost()" role="button" title="remove post"
                     class="fs-1 text-danger mdi mdi-delete-circle"></i>
             </div>
@@ -53,9 +54,17 @@ export default {
                 } catch (error) {
                     Pop.error(error)
                 }
-            }
+            },
+            async likePost() {
+                try {
+                    await postsService.likePost(props.post.id)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
         }
     }
+
 };
 </script>
 

@@ -28,11 +28,20 @@
             <div v-else>
                 <div class="col-8">Loading Profile....</div>
             </div>
-        </section>
 
+        </section>
         <section class="row">
-            <div v-for="post in posts" :key="post.id" class="col-8">
-                <PostCard :post="post" />
+
+            <div class="col-md-9 col-12 mb-4">
+                <div v-for="post in posts" :key="post.id">
+                    <PostCard :post="post" />
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div v-for="ad in ads" :key="ad.title">
+                    <AdCard :ad="ad" />
+                </div>
             </div>
         </section>
 
@@ -48,12 +57,13 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import Pop from "../utils/Pop";
 import { useRoute } from "vue-router";
 import { logger } from "../utils/Logger";
 import { profilesService } from "../services/ProfilesService"
 import PostCard from "../components/PostCard.vue";
+import AdCard from '../components/AdCard.vue';
 
 export default {
     setup() {
@@ -87,6 +97,7 @@ export default {
             newer: computed(() => AppState.newerPage),
             older: computed(() => AppState.olderPage),
             account: computed(() => AppState.account),
+            ads: computed(() => AppState.ad),
             async changePage(url) {
                 try {
                     await profilesService.changePage(url)
@@ -96,7 +107,7 @@ export default {
             }
         };
     },
-    components: { PostCard }
+    components: { PostCard, AdCard }
 };
 </script>
 

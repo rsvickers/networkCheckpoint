@@ -33,6 +33,19 @@ class PostsService {
         logger.log('delete project', res.data)
         AppState.posts = AppState.posts.filter((post) => post.id != postId)
     }
+
+    async editPost(postData) {
+        const res = await api.put(`api/posts/${postData.id}`, postData)
+        const newPost = new Post(res.data)
+        AppState.posts = newPost
+    }
+    async likePost(postId) {
+        const res = await api.post(`api/posts/${postId}/like`)
+        logger.log('liked?', res.data)
+        const newLike = new Post(res.data)
+        const targetIndex = AppState.posts.findIndex((post) => post.id == postId)
+        AppState.posts[targetIndex] = newLike
+    }
 }
 
 export const postsService = new PostsService()

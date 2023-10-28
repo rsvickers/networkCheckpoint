@@ -19,6 +19,7 @@
 
                         <button class="btn btn-primary">Submit</button>
                     </form>
+                    <!-- <p @click="editPost()" role="button" class=""><i class="mdi mdi-pencil-circle"></i>Edit</p> -->
                 </div>
             </div>
         </div>
@@ -42,11 +43,24 @@ export default {
                 try {
                     const postData = form.value
                     await postsService.createPost(postData)
+                    form.value = {}
                     Modal.getOrCreateInstance('#newPostModal').hide()
                 } catch (error) {
                     Pop.error(error)
                 }
             },
+
+            async editPost() {
+                try {
+                    const postData = form.value
+                    await postsService.editPost(postData)
+                    Modal.getOrCreateInstance('#newPostModal').hide()
+
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
             account: computed(() => AppState.account)
         }
     }
