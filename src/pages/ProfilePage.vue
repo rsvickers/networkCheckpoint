@@ -71,6 +71,7 @@ export default {
             getProfileById();
             getPostsByProfileId();
         });
+
         const route = useRoute();
         async function getProfileById() {
             try {

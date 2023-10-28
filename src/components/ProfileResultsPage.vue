@@ -5,7 +5,9 @@
             <div class="col-8">
 
                 <div class="d-flex align-items-center p-3">
-                    <img class="profile-img shadow" :src="profile.picture" alt="">
+                    <router-link :to="{ name: 'Profile', params: { profileId: profile.id } }">
+                        <img class="profile-img shadow" :src="profile.picture" alt="">
+                    </router-link>
                     <p v-if="profile.graduated"><i class="fs-1 mdi mdi-account-school"></i></p>
                     <p v-else></p>
                 </div>

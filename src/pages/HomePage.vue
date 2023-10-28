@@ -2,9 +2,10 @@
   <div class="container-fluid">
     <section class="row p-4">
       <div class="col-12 col-md-9 d-flex align-items-center">
-
-        <button data-bs-toggle="modal" data-bs-target="#newPostModal" class="btn btn-outline-success ms-2">Post
-          Something!</button>
+        <div v-if="account.id">
+          <button data-bs-toggle="modal" data-bs-target="#newPostModal" class="btn btn-outline-success ms-2">Post
+            Something!</button>
+        </div>
       </div>
     </section>
     <section class="row">
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import Pop from "../utils/Pop.js";
 import { AppState } from "../AppState.js"
 import { postsService } from "../services/PostsService.js"
@@ -49,9 +50,14 @@ import { adsService } from "../services/AdsService.js";
 
 export default {
   setup() {
+    const account = ref({})
+    watchEffect(() => {
+      account.value = AppState.account
+    })
     onMounted(() => {
       getPosts();
       getAds();
+
     });
     async function getPosts() {
       try {
@@ -73,7 +79,7 @@ export default {
       posts: computed(() => AppState.posts),
       newer: computed(() => AppState.newerPage),
       older: computed(() => AppState.olderPage),
-      account: computed(() => AppState.account),
+      account,
       ads: computed(() => AppState.ad),
 
       async changePage(url) {

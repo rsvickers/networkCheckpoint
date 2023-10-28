@@ -17,6 +17,7 @@ export const AppState = reactive({
   page: 0,
   searchQuery: '',
   profile: null,
+  profiles: [],
   ad: [],
 
 })
