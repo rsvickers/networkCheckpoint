@@ -53,6 +53,7 @@ export default {
     const account = ref({})
     watchEffect(() => {
       account.value = AppState.account
+
     })
     onMounted(() => {
       getPosts();

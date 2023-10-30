@@ -16,7 +16,7 @@
                     </div>
                     <a v-if="profile.github != ''" :href="profile.github" :title="`${profile.name}'s GitHub'`"><i
                             class="mdi fs-1 mdi-github"></i></a>
-                    <a v-if="profile.linkedin != ''" :href="profile.github" :title="`${profile.name}'s LinkedIn'`"><i
+                    <a v-if="profile.linkedin != ''" :href="profile.linkedin" :title="`${profile.name}'s LinkedIn'`"><i
                             class="mdi fs-1 mdi-linkedin"></i></a>
                     <a v-if="profile.resume != ''" :href="profile.resume" :title="`${profile.name}'s Resume'`"><i
                             class="mdi fs-1 mdi-file-outline"></i></a>

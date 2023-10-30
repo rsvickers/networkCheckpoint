@@ -29,7 +29,7 @@
 
 <script>
 // import { AppState } from '../AppState';
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import Pop from '../utils/Pop.js';
 import { postsService } from '../services/PostsService.js';
 import { Modal } from 'bootstrap';
@@ -37,8 +37,12 @@ import { AppState } from '../AppState.js';
 export default {
     setup() {
         const form = ref({})
+        watchEffect(() => {
+            // form.value = AppState.posts
+        })
         return {
             form,
+
             async createPost() {
                 try {
                     const postData = form.value
